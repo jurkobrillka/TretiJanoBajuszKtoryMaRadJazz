@@ -30,27 +30,42 @@ const requiredPies = [pie17,pie18,pie19,pie20,pie21,pie22];
 const webteTermsList = []
 
 
-function preparePieData() {
-    console.log("hi")
+function preparePieData(indx) {
+    var retList = []
+   // retList.push(webteTermsList[i].a);
+    console.log(indx)
+    console.log(webteTermsList);
+    console.log(webteTermsList[indx].a);
+    retList.push(webteTermsList[indx].b);
+    retList.push(webteTermsList[indx].c);
+    retList.push(webteTermsList[indx].d);
+    retList.push(webteTermsList[indx].e);
+    retList.push(webteTermsList[indx].f);
+    retList.push(webteTermsList[indx].fn);
+    return retList
 }
 
 function displayPies(){
     for (let i = 0; i <requiredPies.length ; i++) {
         var data = [{
-            values: [19, 26, 55],
-            labels: ['Residential', 'Non-Residential', 'Utility'],
-            type: 'pie'
+            values: preparePieData(i),
+            labels: ['A', 'B', 'C', 'D', 'E', 'Fx', 'Fn'],
+            type: 'pie',
+            textinfo: "label+percent",
         }];
 
         var layout = {
+            autosize: true,
             height: 380,
             width: 380,
-            title: 'Show Edit in Chart Studio Modebar Button'
+            showlegend: false,
+            title: "Známky za obdobie "+webteTermsList[i].year
         };
 
 
 
         Plotly.newPlot(requiredPies[i], data, layout, {responsive: true});
+
     }
 }
 
@@ -144,6 +159,9 @@ function prepareCompletionData() {
     var data = [trace1, trace2];
 
     var layout = {
+        responsive: true,
+        autosize: true,
+        staticPlot: true,
         title: 'Hrdinovia čo prešli/neprešli',
         yaxis: {
             title: 'Počet žiakov',
@@ -158,7 +176,7 @@ function prepareCompletionData() {
         barmode: 'group'
     };
 
-    Plotly.newPlot('mySecDiv', data, layout, {staticPlot: true}, {responsive: true});
+    Plotly.newPlot('mySecDiv', data, layout,{responsive: true}, {staticPlot: true});
 }
 
 
@@ -221,7 +239,6 @@ console.log("HI GIGI")
 parseXML();
 prepareAData();
 prepareCompletionData();
-preparePieData();
 displayPies();
 
 

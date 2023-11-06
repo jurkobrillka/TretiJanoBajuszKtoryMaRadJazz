@@ -9,9 +9,17 @@
 body{
     margin: 0rem;
     font-family: 'Bebas_Neue', Arial, fangsong;
-    background-color: var(--background-white-color);
+    background-color: white;
 }
 
+.mainBlock{
+    padding: 1.5rem;
+    justify-content: center;
+    justify-items: center;
+    justify-self: center;
+    display: flex;
+    flex-direction: column;
+}
 
 .topnav {
     overflow: hidden;
