@@ -18,13 +18,41 @@ class WebteSubj {
     }
 }
 
+const pie17 = document.getElementById("pie17");
+const pie18 = document.getElementById("pie18");
+const pie19 = document.getElementById("pie19");
+const pie20 = document.getElementById("pie20");
+const pie21 = document.getElementById("pie21");
+const pie22 = document.getElementById("pie22");
+
+const requiredPies = [pie17,pie18,pie19,pie20,pie21,pie22];
 
 const webteTermsList = []
-console.log("HI GIGI")
-parseXML();
-prepareAData();
-prepareCompletionData();
 
+
+function preparePieData() {
+    console.log("hi")
+}
+
+function displayPies(){
+    for (let i = 0; i <requiredPies.length ; i++) {
+        var data = [{
+            values: [19, 26, 55],
+            labels: ['Residential', 'Non-Residential', 'Utility'],
+            type: 'pie'
+        }];
+
+        var layout = {
+            height: 380,
+            width: 380,
+            title: 'Show Edit in Chart Studio Modebar Button'
+        };
+
+
+
+        Plotly.newPlot(requiredPies[i], data, layout, {responsive: true});
+    }
+}
 
 function prepareAData() {
 
@@ -41,14 +69,23 @@ function prepareAData() {
 
     var data = [trace1];
     var layout = {
+
         title: 'A-čka z WEBTE pre daný rok',
+        autosize: true,
+        yaxis: {
+            title: 'Počet žiakov',
+            titlefont: {
+                size: 16,
+                color: 'rgb(107, 107, 107)'
+            }
+        },
         xaxis: {
             tickangle: -45
         },
         barmode: 'group'
     }
 
-    Plotly.newPlot('myDiv', data, layout);
+    Plotly.newPlot('myDiv', data, layout, {responsive: true});
 }
 
 
@@ -84,21 +121,22 @@ function prepareCompletionData() {
         x: returnValue("year"),
         text: allSuccessfullArray.map(String),
         type: 'bar',
-        name: 'presli',
+        name: 'Prešli',
         marker: {
-            color: 'rgb(49,130,189)',
+            color: 'rgb(121, 255, 77)',
             opacity: 0.7,
         }
     };
 
+    //TODO DOLEYITE HORIYONTALNY https://plotly.com/javascript/configuration-options/
     var trace2 = {
         y: allUnSeccArray,
         x: returnValue("year"),
         text: allUnSeccArray.map(String),
         type: 'bar',
-        name: 'nepresli',
+        name: 'Neprešli',
         marker: {
-            color: 'rgb(49,1,189)',
+            color: 'rgb(255, 112, 77)',
             opacity: 0.7,
         }
     };
@@ -107,14 +145,22 @@ function prepareCompletionData() {
 
     var layout = {
         title: 'Hrdinovia čo prešli/neprešli',
+        yaxis: {
+            title: 'Počet žiakov',
+            titlefont: {
+                size: 16,
+                color: 'rgb(107, 107, 107)'
+            }
+        },
         xaxis: {
             tickangle: -45
         },
         barmode: 'group'
     };
 
-    Plotly.newPlot('mySecDiv', data, layout);
+    Plotly.newPlot('mySecDiv', data, layout, {staticPlot: true}, {responsive: true});
 }
+
 
 function returnValue(what) {
     var retArr = [];
@@ -165,5 +211,17 @@ function parseXML() {
         webteSubj.seeByYear();
     }
 }
+
+
+
+
+
+
+console.log("HI GIGI")
+parseXML();
+prepareAData();
+prepareCompletionData();
+preparePieData();
+displayPies();
 
 
