@@ -1,8 +1,6 @@
 class WebteSubj {
-
-
     constructor(year, a, b, c, d, e, f, fn) {
-        this.year = year;
+        this.year = extractLastTwoDigits(year);
         this.a = a
         this.b = b
         this.c = c
@@ -45,6 +43,18 @@ function preparePieData(indx) {
     return retList
 }
 
+function extractLastTwoDigits(inputString) {
+    // Split the input string into an array based on the "/" character
+    var parts = inputString.split("/");
+
+    // Extract the last two digits of each part and join them with "/"
+    var result = parts.map(function (part) {
+        return part.slice(-2);
+    }).join("/");
+
+    return result;
+}
+
 function displayPies(){
     for (let i = 0; i <requiredPies.length ; i++) {
         var data = [{
@@ -71,11 +81,17 @@ function displayPies(){
 
 function prepareAData() {
 
+    var isSmallScreen = window.innerWidth < 600;
+    console.log("SCREEEN " + isSmallScreen)
     var trace1 = {
-        x: returnValue("year"),
-        y: returnValue("a"),
+        x: isSmallScreen ? returnValue("a") : returnValue("year"),
+        y: isSmallScreen ? returnValue("year") : returnValue("a"),
+        //x: returnValue("year"),
+        //y: returnValue("a"),
         type: 'bar',
         name: 'Á-čka',
+        orientation: isSmallScreen ? 'h' : 'v', // Set orientation dynamically
+
         marker: {
             color: 'rgb(49,130,189)',
             opacity: 0.7,
@@ -88,13 +104,14 @@ function prepareAData() {
         title: 'A-čka z WEBTE pre daný rok',
         autosize: true,
         yaxis: {
-            title: 'Počet žiakov',
+            title: isSmallScreen ? "Rok" : "Počet žiakov",
             titlefont: {
                 size: 16,
                 color: 'rgb(107, 107, 107)'
             }
         },
         xaxis: {
+            title: isSmallScreen ? "Počet žiakov" : "Rok",
             tickangle: -45
         },
         barmode: 'group'
@@ -106,6 +123,8 @@ function prepareAData() {
 
 function prepareCompletionData() {
 
+
+    var isSmallScreen = window.innerWidth < 600;
     var allSuccessfullArray = [];
     for (let i = 0; i < returnValue("year").length; i++) {
         allSuccessfullArray[i] = Number(webteTermsList[i].a)
@@ -132,11 +151,14 @@ function prepareCompletionData() {
     console.log(allUnSeccArray)
     var trace1 = {
 
-        y: allSuccessfullArray,
-        x: returnValue("year"),
+        x: isSmallScreen ? allSuccessfullArray : returnValue("year"),
+        y: isSmallScreen ? returnValue("year") : allSuccessfullArray,
+        //y: allSuccessfullArray,
+        //x: returnValue("year"),
         text: allSuccessfullArray.map(String),
         type: 'bar',
         name: 'Prešli',
+        orientation: isSmallScreen ? 'h' : 'v',
         marker: {
             color: 'rgb(121, 255, 77)',
             opacity: 0.7,
@@ -145,11 +167,14 @@ function prepareCompletionData() {
 
     //TODO DOLEYITE HORIYONTALNY https://plotly.com/javascript/configuration-options/
     var trace2 = {
-        y: allUnSeccArray,
-        x: returnValue("year"),
+        x: isSmallScreen ? allUnSeccArray : returnValue("year"),
+        y: isSmallScreen ? returnValue("year") : allUnSeccArray,
+        //y: allUnSeccArray,
+        //x: returnValue("year"),
         text: allUnSeccArray.map(String),
         type: 'bar',
         name: 'Neprešli',
+        orientation: isSmallScreen ? 'h' : 'v',
         marker: {
             color: 'rgb(255, 112, 77)',
             opacity: 0.7,
@@ -164,13 +189,15 @@ function prepareCompletionData() {
         staticPlot: true,
         title: 'Hrdinovia čo prešli/neprešli',
         yaxis: {
-            title: 'Počet žiakov',
+            title: isSmallScreen ? "Rok" : "Počet žiakov",
+            //title: 'Počet žiakov',
             titlefont: {
                 size: 16,
                 color: 'rgb(107, 107, 107)'
             }
         },
         xaxis: {
+            title: isSmallScreen ? "Počet žiakov" : "Rok",
             tickangle: -45
         },
         barmode: 'group'
@@ -240,5 +267,7 @@ parseXML();
 prepareAData();
 prepareCompletionData();
 displayPies();
+window.addEventListener('resize', prepareAData);
+window.addEventListener('resize', prepareCompletionData);
 
 

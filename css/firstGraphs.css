@@ -29,3 +29,13 @@
         flex-direction: column;
     }
 }
+
+
+
+
+.div{
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+
+}

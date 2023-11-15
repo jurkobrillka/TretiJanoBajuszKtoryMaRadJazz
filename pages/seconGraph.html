@@ -1,8 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src='https://cdn.plot.ly/plotly-2.27.0.min.js'></script>
+
+    <script src="../js/index.js" type="module"></script>
+    <script src="../js/secondGraph.js" type="module"></script>
+    <script src="../js/slider.js" type="module"></script>
+
+
     <meta charset="UTF-8">
     <title>Druhy graf</title>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="Stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -19,7 +27,20 @@
     </a>
 </div>
 
+
+    <div style="display: flex; flex-direction: row">
+        <div style="display: flex; flex: 3"></div>
+        <div style="display: flex; flex: 2; justify-self: center;
+    justify-content: center;
+    justify-items: center;">
+            <slider-top minimal="10" maximal="20">
+            </slider-top>
+        </div>
+        <div style="display: flex; flex: 3"></div>
+    </div>
+    <button id="STOJ">STOJ</button>
+    <div><div id='sin-cos-graph'><!-- Plotly chart will be drawn inside this DIV --></div></div>
+
 </body>
 
-<script src="../js/index.js" type="module"></script>
 </html>
